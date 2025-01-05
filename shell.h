@@ -12,6 +12,6 @@
 void display_prompt(void);
 char *read_command(void);
 char **split_command(char *command);
-int execute_command(char **args);
-
+int execute_command(char **argv);
+int parse_line(char *line, char **argv);
 #endif /* MAIN_H */
