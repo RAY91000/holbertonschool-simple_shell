@@ -6,16 +6,17 @@
 #define PROMPT "ツ"
 
 /**
- *
- *
+ * prompt - Function to print a custom prompt
+ * if input is from a terminal.
  */
 
-void prompt(int fd, struct stat buf)
+void display_prompt(void)
 {
 
-	fstat(fd, &buf);
+	struct stat buf;
 
-	if (S_ISCHR(buf.st_mode)) 
+	fstat(STDIN_FILENO, &buf);
+	if (S_ISCHR(buf.st_mode))
 {
 	printf("%s", PROMPT);
 	fflush(stdout);
@@ -23,15 +24,15 @@ void prompt(int fd, struct stat buf)
 }
 
 /**
+ * main - Entry point for the program
  *
- *
+ * Return: Always 0 (Success)
  */
 
 int main(void)
 {
-	struct stat buf;
 
-	prompt(STDIN_FILENO, buf);
+	dsiplay_prompt();
 
 	return (0);
 }
