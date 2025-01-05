@@ -8,7 +8,6 @@
 
 #define PROMPT "ツ"
 
-extern char **environ;
 /**
  * display_prompt - Function to display custom prompt
  */
@@ -19,9 +18,59 @@ void display_prompt(void)
 }
 
 /**
- * main - Entry point for the program
+ * parse_line - Parse the input line into arguments.
+ * @line: The input string from the user.
+ * @argv: Array to hold parsed arguments.
  *
- * Return: Always 0 (Success)
+ * Return: Number of arguments parsed.
+ */
+int parse_line(char *line, char **argv)
+{
+	int i = 0;
+
+	argv[i] = strtok(line, " ");
+	while (argv[i] != NULL)
+	{
+		i++;
+		argv[i] = strtok(NULL, " ");
+	}
+	return (i);
+}
+
+/**
+ * execute_command - Fork a child process to execute the command.
+ * @argv: Array of arguments for the command.
+ *
+ * Return: Nothing.
+ */
+void execute_command(char **argv)
+{
+	pid_t pid = fork();
+	int status;
+
+	if (pid == 0)
+	{
+		if (execve(argv[0], argv, environ) == -1)
+		{
+			perror("Error");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid > 0)
+	{
+		wait(&status);
+	}
+	else
+	{
+		perror("fork failed");
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ * main - Entry point for the program.
+ *
+ * Return: Always 0 (Success).
  */
 int main(void)
 {
@@ -29,54 +78,28 @@ int main(void)
 	char *argv[64];
 	size_t len = 0;
 	ssize_t nread;
-	int status;
 
 	while (1)
 	{
 		display_prompt();
-
 		nread = getline(&line, &len, stdin);
-
 		if (nread == -1)
 		{
 			free(line);
 			printf("\n");
 			break;
 		}
-
 		line[strcspn(line, "\n")] = '\0';
-
 		if (strlen(line) == 0)
 			continue;
 
-		argv[0] = strtok(line, " ");
-		int i = 1;
-		while ((argv[i] = strtok(NULL, " ")) != NULL)
-		{
-			i++;
-		}
-		argv[i] = NULL;
+		int num_args = parse_line(line, argv);
 
-		pid_t pid = fork();
-
-		if (pid == 0)
+		if (num_args > 0)
 		{
-			if (execve(argv[0], argv, environ) == -1)
-			{
-				perror("Error");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else if (pid > 0)
-		{
-			wait(&status);
-		}
-		else
-		{
-			perror("fork failed");
-			exit(EXIT_FAILURE);
+			execute_command(argv);
 		}
 	}
-
 	return (0);
 }
+
