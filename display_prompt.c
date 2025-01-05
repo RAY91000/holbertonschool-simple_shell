@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <shell.h>
+#include "shell.h"
 
 #define PROMPT "ツ"
 
@@ -32,7 +32,7 @@ void display_prompt(void)
 int main(void)
 {
 
-	dsiplay_prompt();
+	display_prompt();
 
 	return (0);
 }
