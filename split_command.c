@@ -26,7 +26,6 @@ char **split_command(char *command)
 		i++;
 	}
 	argv[i] = NULL;
-
+	printf("\n");
 	return (argv);
 }
-

@@ -7,4 +7,5 @@ void display_prompt(void)
 {
 	printf("%s", PROMPT);
 	fflush(stdout);
+	printf("\n");
 }

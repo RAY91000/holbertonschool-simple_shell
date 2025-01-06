@@ -6,6 +6,8 @@
  *
  * Return: 1 if the command executed successfully, otherwise 0.
  */
+extern char **environ;
+
 int execute_command(char **argv)
 {
 	pid_t pid = fork();

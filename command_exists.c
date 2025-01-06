@@ -15,16 +15,14 @@
 int command_exists(char *cmd)
 {
 	char *path_env = getenv("PATH");
+	char *path_copy = strdup(path_env);
+	char *dir = strtok(path_copy, ":");
+	struct stat buf;
 
 	if (path_env == NULL)
 	{
 		return (0);
 	}
-
-	char *path_copy = strdup(path_env);
-	char *dir = strtok(path_copy, ":");
-
-	struct stat buf;
 
 	while (dir != NULL)
 	{
@@ -42,6 +40,6 @@ int command_exists(char *cmd)
 	}
 
 	free(path_copy);
+
 	return (0);
 }
-

@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 
 #define PROMPT "ツ"
 
@@ -12,10 +13,8 @@ int main(void)
 	char *line;
 	char **argv;
 	int status;
-
 	while (1)
-	{
-
+{
 		display_prompt();
 
 		line = read_command();
@@ -34,10 +33,17 @@ int main(void)
 		argv = split_command(line);
 
 		status = execute_command(argv);
+		
+		if (status == 0)
+		{
+			printf("Error: command execution failed\n");
+		}
 
 		free(argv);
 		free(line);
 	}
+
+	printf("\n");
 
 	return (0);
 }
