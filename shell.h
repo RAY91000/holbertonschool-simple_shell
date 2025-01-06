@@ -17,6 +17,6 @@ void display_prompt(void);
 char *read_command(void);
 char **split_command(char *command);
 int execute_command(char **argv);
-
+int command_exists(char *cmd);
 #endif /* MAIN_H */
 

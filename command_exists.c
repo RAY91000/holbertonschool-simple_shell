@@ -15,8 +15,8 @@
 int command_exists(char *cmd)
 {
 	char *path_env = getenv("PATH");
-	char *path_copy = strdup(path_env);
-	char *dir = strtok(path_copy, ":");
+	char *path_copy;
+	char *dir;
 	struct stat buf;
 
 	if (path_env == NULL)
@@ -24,11 +24,21 @@ int command_exists(char *cmd)
 		return (0);
 	}
 
+	path_copy = malloc(strlen(path_env) + 1);
+	if (!path_copy)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	strcpy(path_copy, path_env);
+
+	dir = strtok(path_copy, ":");
+
 	while (dir != NULL)
 	{
 		char full_path[256];
 
-		snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd);
+		sprintf(full_path, "%s/%s", dir, cmd);
 
 		if (stat(full_path, &buf) == 0 && (buf.st_mode & S_IXUSR))
 		{
