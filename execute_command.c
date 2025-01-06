@@ -1,4 +1,8 @@
 #include "shell.h"
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
  * execute_command - Function to fork and execute a command using execve.
@@ -17,7 +21,7 @@ int execute_command(char **argv)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
-			perror("Error executing command");
+			perror(argv[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

@@ -1,9 +1,9 @@
+#include "shell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "shell.h"
 
 /**
  * command_exists - Check if the command exists in the directories in PATH
@@ -11,27 +11,20 @@
  *
  * Return: 1 if command exists, 0 otherwise.
  */
-
 int command_exists(char *cmd)
 {
 	char *path_env = getenv("PATH");
-	char *path_copy;
+	char *path_copy = malloc(strlen(path_env) + 1);
 	char *dir;
 	struct stat buf;
 
-	if (path_env == NULL)
+	if (path_env == NULL || path_copy == NULL)
 	{
+		free(path_copy);
 		return (0);
 	}
 
-	path_copy = malloc(strlen(path_env) + 1);
-	if (!path_copy)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
 	strcpy(path_copy, path_env);
-
 	dir = strtok(path_copy, ":");
 
 	while (dir != NULL)

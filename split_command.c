@@ -1,4 +1,7 @@
 #include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * split_command - Function to split the input command line into arguments.
@@ -26,6 +29,5 @@ char **split_command(char *command)
 		i++;
 	}
 	argv[i] = NULL;
-	printf("\n");
 	return (argv);
 }

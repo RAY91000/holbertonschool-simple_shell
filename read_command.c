@@ -1,4 +1,7 @@
 #include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * read_command - Function to read the input command from the user.
@@ -17,6 +20,5 @@ char *read_command(void)
 	}
 
 	line[strcspn(line, "\n")] = '\0';
-	printf("\n");
 	return (line);
 }

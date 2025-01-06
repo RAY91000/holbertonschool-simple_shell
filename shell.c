@@ -13,6 +13,7 @@ int main(void)
 	char *line;
 	char **argv;
 	int status;
+
 	while (1)
 {
 		display_prompt();
@@ -33,10 +34,10 @@ int main(void)
 		argv = split_command(line);
 
 		status = execute_command(argv);
-		
+
 		if (status == 0)
 		{
-			printf("Error: command execution failed\n");
+			fprintf(stderr, "%s: 1: %s: not found\n", argv[0], argv[0]);
 		}
 
 		free(argv);
