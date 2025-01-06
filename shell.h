@@ -9,6 +9,9 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+/* global environ variable*/
+extern char **environ;
+
 /* Define the prompt */
 #define PROMPT "ツ"
 
