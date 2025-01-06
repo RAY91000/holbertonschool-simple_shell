@@ -7,15 +7,16 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/stat.>
+#include <sys/stat.h>
 
-extern char **environ;
+/* Define the prompt */
+#define PROMPT "ツ"
+
 /* Prototypes */
 void display_prompt(void);
 char *read_command(void);
 char **split_command(char *command);
-void execute_command(char **argv);
-int parse_line(char *line, char **argv);
-int command_exists(char *cmd);
+int execute_command(char **argv);
 
 #endif /* MAIN_H */
+
