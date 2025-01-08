@@ -6,6 +6,5 @@
  */
 void display_prompt(void)
 {
-	printf("%s", PROMPT);
-	fflush(stdout);
+	write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
 }
