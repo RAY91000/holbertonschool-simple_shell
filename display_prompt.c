@@ -1,10 +1,17 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
 /**
- * display_prompt - Function to display custom prompt.
+ * display_prompt - Displays the shell prompt.
  */
 void display_prompt(void)
 {
-	write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
+	const char *prompt = "simple_shell$ ";
+
+	if (write(STDOUT_FILENO, prompt, strlen(prompt)) == -1)
+	{
+		perror("write");
+		exit(EXIT_FAILURE);
+	}
 }
