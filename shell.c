@@ -4,46 +4,51 @@
 #include <string.h>
 
 /**
- * main - Entry point of the shell program.
- *
- * Return: Always 0 (Success).
+ * display_prompt - Function to display custom prompt.
  */
-int main(void)
+void display_prompt(void)
 {
-	char *line;
-	char **argv;
-	int status;
-
-	while (1)
+	if (isatty(STDIN_FILENO))
 	{
-		display_prompt();
+		printf("$ ");
+		fflush(stdout);
+	}
+}
 
-		line = read_command();
-		if (line == NULL)  /* This handles EOF (Ctrl+D) */
-		{
-			printf("\n");
-			break;  /* Exit the shell when EOF is received */
-		}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-		if (strlen(line) == 0)
-		{
-			free(line);
-			continue;  /* Don't execute if the line is empty */
-		}
+/**
+ * read_command - Function to read the input command from the user.
+ *
+ * Return: A string containing the user's command input.
+ */
+char *read_command(void)
+{
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t nread;
+	size_t i;
 
-		argv = split_command(line);
-
-		status = execute_command(argv);
-
-		/* Check if the command was found or not */
-		if (status == 0)
-		{
-			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
-		}
-
-		free(argv);
-		free(line);
+	nread = getline(&line, &len, stdin);
+	if (nread == -1)
+	{
+		free(line);  /* Handle EOF (Ctrl+D) */
+		return (NULL);
 	}
 
-	return (0);  /* The shell exits here, no prompt after exit */
+	/* Remove unwanted characters (like escape sequences) */
+	for (i = 0; i < strlen(line); i++)
+	{
+		if (line[i] == 27 || line[i] < 32)
+		{
+			line[i] = ' ';
+		}
+	}
+
+	/* Remove newline character at the end */
+	line[strcspn(line, "\n")] = '\0';
+
+	return (line);
 }

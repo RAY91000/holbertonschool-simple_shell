@@ -15,6 +15,7 @@ int handle_execve(char **argv)
 {
 	struct stat buf;
 
+	/* Check if the command starts with '/' (absolute path) */
 	if (argv[0][0] == '/')
 	{
 		if (stat(argv[0], &buf) == 0 && (buf.st_mode & S_IXUSR))
@@ -24,11 +25,10 @@ int handle_execve(char **argv)
 		}
 		else
 		{
-			/* Command not found error message */
-			perror(argv[0]);  /* This prints the message like 'No such file or directory' */
 			return (0);  /* Command not found */
 		}
 	}
+	/* Check if the command exists in the PATH */
 	else if (command_exists(argv[0]))
 	{
 		execve(argv[0], argv, environ);
