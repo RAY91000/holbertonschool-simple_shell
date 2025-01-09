@@ -4,7 +4,7 @@ A shell is a type of computer program called a command-line interpreter that let
 This project has for goal to replicate its basic usage and features such as command implementation and directory navigation.
 
 # Flowchart
-![Flowchart image (1)]()
+![Flowchart image (1)](https://lucid.app/publicSegments/view/4a97a26a-c372-4c13-921d-6e66d5494b85/image.png)
 
 # Project Requirements
 General
@@ -59,4 +59,52 @@ General
 - wait4 (man 2 wait4)
 - write (man 2 write)
 
+## How It Works
 
+You will need to compile all the files for the program to work. You can compile using:
+
+`gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh`
+
+Then you can test the program either in interactive mode:
+```
+hikarikedo@HikariKedosPC:~/holbertonschool-simple_shell$ ./hsh
+#cisfun$ /bin/ls
+AUTHORS    command_exists.c   handle_execve.c     hsh     man_1_simple_shell  shell.h          test_c
+README.md  execute_command.c  handle_exit_echo.c  main.c  shell.c             split_command.c
+#cisfun$
+```
+ Or in non-interactive mode:
+```
+hikarikedo@HikariKedosPC:~/holbertonschool-simple_shell$ echo "/bin/ls" | ./hsh
+AUTHORS    command_exists.c   handle_execve.c     hsh     man_1_simple_shell  shell.h          test_c
+README.md  execute_command.c  handle_exit_echo.c  main.c  shell.c             split_command.c
+hikarikedo@HikariKedosPC:~/holbertonschool-simple_shell$
+```
+
+## Project Files
+
+| Files | Purpose |
+| :---------------: | :---------------: |
+| main.c | The entry point of the shell program |
+| shell.c | Contains utility functions for prompt display and input reading |
+| split_command.c | Splits a command line string into an array of arguments |
+| execute_command.c | Handles command execution |
+| command_exists.c | Checks if a command exists in the system’s PATH |
+| handle_execve.c | Executes commands using the execve system call |
+| handle_exit_echo.c | Implements built-in commands exit and echo |
+| shell.h | Header file containing shared definitions and function prototypes |
+
+## Coding Style
+Here, at Holberton School, we have a specific coding style that makes our codes look clean and easy to read:
+
+Its called the [Betty-style](https://github.com/hs-hq/Betty/blob/main/betty-style.pl). With this we respect numerous spacing and syntaxes which is very useful to improve one's code clarity.
+
+## Man Page
+Here is our [manual page](https://github.com/RAY91000/holbertonschool-simple_shell/blob/main/man_1_simple_shell). Feel free to check it out!
+
+## Authors
+The [Authors](https://github.com/RAY91000/holbertonschool-simple_shell/blob/main/AUTHORS) of this project were: 
+
+-[Kerian](https://github.com/Hikarikedo)
+
+-[Ray](https://github.com/RAY91000)
