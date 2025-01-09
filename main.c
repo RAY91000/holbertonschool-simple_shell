@@ -18,16 +18,16 @@ int main(void)
 
 	while (1)
 	{
-		display_prompt();  /* Print prompt before reading input */
+		display_prompt();
 
 		line = read_command();
-		if (line == NULL)  /* Handle EOF (Ctrl+D) */
+		if (line == NULL)
 		{
 			free(line);
-			break;  /* Exit the shell when EOF is received */
+			break;
 		}
 
-		if (strlen(line) == 0)  /* Skip empty lines */
+		if (strlen(line) == 0)
 		{
 			free(line);
 			continue;
@@ -35,9 +35,9 @@ int main(void)
 
 		argv = split_command(line);
 
-		status = execute_command(argv);  /* Execute the command */
+		status = execute_command(argv);
 
-		if (status == 0)  /* If execution fails, print error */
+		if (status == 0)
 		{
 			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
@@ -46,5 +46,5 @@ int main(void)
 		free(line);
 	}
 
-	return (0);  /* Exit cleanly, no prompt after exit */
+	return (0);
 }

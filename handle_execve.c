@@ -15,25 +15,23 @@ int handle_execve(char **argv)
 {
 	struct stat buf;
 
-	/* Check if the command starts with '/' (absolute path) */
 	if (argv[0][0] == '/')
 	{
 		if (stat(argv[0], &buf) == 0 && (buf.st_mode & S_IXUSR))
 		{
 			execve(argv[0], argv, environ);
-			return (1);  /* Success (although execve won't return unless it fails) */
+			return (1);
 		}
 		else
 		{
-			return (0);  /* Command not found */
+			return (0);
 		}
 	}
-	/* Check if the command exists in the PATH */
 	else if (command_exists(argv[0]))
 	{
 		execve(argv[0], argv, environ);
-		return (1);  /* Success */
+		return (1);
 	}
 
-	return (0);  /* Command not found */
+	return (0);
 }

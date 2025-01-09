@@ -31,15 +31,14 @@ char *read_command(void)
 	ssize_t nread;
 
 	nread = getline(&line, &len, stdin);
-	if (nread == -1) /* Handle EOF (Ctrl+D) */
+	if (nread == -1)
 	{
-		if (isatty(STDIN_FILENO)) /* Print newline only in interactive mode */
+		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "\n", 1);
 		free(line);
 		return (NULL);
 	}
 
-	/* Remove newline character at the end */
 	line[strcspn(line, "\n")] = '\0';
 
 	return (line);

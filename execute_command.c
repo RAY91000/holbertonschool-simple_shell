@@ -15,31 +15,30 @@ int execute_command(char **argv)
 	pid_t pid = fork();
 	int status;
 
-	if (pid == 0)  /* Child process */
+	if (pid == 0)
 	{
-		handle_exit(argv);  /* Check for the exit command. */
-		handle_echo(argv);  /* Check for the echo command. */
+		handle_exit(argv);
+		handle_echo(argv);
 
-		if (!handle_execve(argv))  /* Execute the command. */
+		if (!handle_execve(argv))
 		{
-			exit(EXIT_FAILURE);  /* Exit with error code if execve fails */
+			exit(EXIT_FAILURE);
 		}
 	}
-	else if (pid > 0)  /* Parent process */
+	else if (pid > 0)
 	{
-		wait(&status);  /* Wait for the child process to finish. */
+		wait(&status);
 
-		/* If the child process failed (exit status is non-zero), print the error */
 		if (WEXITSTATUS(status) != 0)
 		{
 			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
 	}
-	else  /* Fork failed */
+	else
 	{
 		perror("fork failed");
 		return (0);
 	}
 
-	return (1);  /* Command executed successfully. */
+	return (1);
 }
