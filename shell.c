@@ -29,22 +29,14 @@ char *read_command(void)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	size_t i;
 
 	nread = getline(&line, &len, stdin);
-	if (nread == -1)
+	if (nread == -1) /* Handle EOF (Ctrl+D) */
 	{
-		free(line);  /* Handle EOF (Ctrl+D) */
+		if (isatty(STDIN_FILENO)) /* Print newline only in interactive mode */
+			write(STDOUT_FILENO, "\n", 1);
+		free(line);
 		return (NULL);
-	}
-
-	/* Remove unwanted characters (like escape sequences) */
-	for (i = 0; i < strlen(line); i++)
-	{
-		if (line[i] == 27 || line[i] < 32)
-		{
-			line[i] = ' ';
-		}
 	}
 
 	/* Remove newline character at the end */
