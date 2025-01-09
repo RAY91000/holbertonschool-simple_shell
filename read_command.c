@@ -10,15 +10,15 @@
  */
 char *read_command(void)
 {
-    char *line = NULL;
-    size_t len = 0;
+	char *line = NULL;
+	size_t len = 0;
 
-    if (getline(&line, &len, stdin) == -1)
-    {
-        free(line);  /* Handle EOF (Ctrl+D). */
-        return (NULL);
-    }
+	if (getline(&line, &len, stdin) == -1)
+	{
+		free(line);  /* Handle EOF (Ctrl+D). */
+		return (NULL);
+	}
 
-    line[strcspn(line, "\n")] = '\0';  /* Remove the newline character. */
-    return (line);
+	line[strcspn(line, "\n")] = '\0';  /* Remove the newline character. */
+	return (line);
 }
