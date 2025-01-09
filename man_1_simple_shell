@@ -1,1 +1,103 @@
-aaaaa
+.SH NAME
+Simple Shell Project \- A custom shell implementation in C.
+
+.SH SYNOPSIS
+.B ./simple_shell
+.SH DESCRIPTION
+The Simple Shell is a custom implementation of a Unix-like command-line interpreter. It supports executing commands, handling built-in commands, and searching for executables in the PATH.
+
+.SH FILES
+.TP
+.B main.c
+The entry point of the shell program. Manages the main loop to:
+.IP • 2
+Display the prompt using \fIdisplay_prompt()\fP.
+.IP •
+Read user input using \fIread_command()\fP.
+.IP •
+Split input into arguments using \fIsplit_command()\fP.
+.IP •
+Execute commands using \fIexecute_command()\fP.
+
+.TP
+.B shell.c
+Contains utility functions:
+.IP •
+\fIdisplay_prompt()\fP: Displays the shell prompt (\fI#cisfun$\fP) in interactive mode.
+.IP •
+\fIread_command()\fP: Reads a line of input from the user, removing any trailing newline character.
+
+.TP
+.B split_command.c
+Splits the input command line into arguments:
+.IP •
+\fIsplit_command()\fP: Breaks the command string into tokens using space as a delimiter. Returns an array of arguments terminated by \fINULL\fP.
+
+.TP
+.B execute_command.c
+Handles command execution by:
+.IP •
+Forking a child process to execute the command.
+.IP •
+Using \fIhandle_execve()\fP to execute valid commands.
+.IP •
+Waiting for the child process to finish and handling errors if the execution fails.
+
+.TP
+.B command_exists.c
+Checks if a command exists in the system's \fIPATH\fP:
+.IP •
+\fIcommand_exists()\fP: Iterates through directories in the \fIPATH\fP variable to locate the command and verifies if it is executable.
+
+.TP
+.B handle_execve.c
+Executes commands using the \fIexecve()\fP system call:
+.IP •
+Handles absolute paths and commands found in \fIPATH\fP using \fIcommand_exists()\fP.
+.IP •
+Returns a success or failure status based on the command execution.
+
+.TP
+.B handle_exit_echo.c
+Implements built-in commands:
+.IP •
+\fIhandle_exit()\fP: Exits the shell if the command is \fIexit\fP.
+.IP •
+\fIhandle_echo()\fP: Prints the arguments passed after \fIecho\fP and exits the child process.
+
+.TP
+.B shell.h
+The header file for the project:
+.IP •
+Contains all function prototypes.
+.IP •
+Includes necessary libraries and defines constants like \fIPROMPT\fP and the global \fIenviron\fP variable.
+
+.SH EXAMPLES
+Run the shell:
+.EX
+$ ./simple_shell
+#cisfun$ ls -l
+total 4
+-rw-r--r-- 1 user user 1024 Jan 9 2025 file.txt
+#cisfun$ echo Hello, world!
+Hello, world!
+#cisfun$ exit
+.EE
+
+.SH AUTHORS
+This Simple Shell project was created as part of a coding exercise or learning module.
+.Kerian Douidi
+.Ray Dotrop
+
+.SH BUGS
+If you encounter any issues, please report them to the project maintainers.
+
+.SH SEE ALSO
+.BR bash (1),
+.BR sh (1),
+.BR execve (2),
+.BR fork (2),
+.BR getenv (3)
+
+
