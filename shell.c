@@ -1,20 +1,23 @@
 #include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-/**
- * main_loop - The main loop of the shell.
- */
-void main_loop(void)
+int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	char *argv[2];
+	char **argv;
 
 	while (1)
 	{
-		display_prompt();
-		nread = read_command(&line, &len);
+		if (isatty(STDIN_FILENO))
+			display_prompt();
 
+		nread = read_command(&line, &len);
 		if (nread == -1)
 		{
 			write(STDOUT_FILENO, "\n", 1);
@@ -23,19 +26,12 @@ void main_loop(void)
 
 		if (nread > 1)
 		{
-			parse_command(line, argv);
+			argv = parse_command(line);
 			execute_command(argv);
+			free(argv);
 		}
 	}
 
 	free(line);
-}
-
-/**
- * main - Entry point for the shell program.
- */
-int main(void)
-{
-	main_loop();
 	return (0);
 }

@@ -22,11 +22,37 @@ ssize_t read_command(char **line, size_t *len)
  * @line: The command line to parse.
  * @argv: Array to store the arguments.
  */
-void parse_command(char *line, char **argv)
+char **parse_command(char *line)
 {
-	line[strcspn(line, "\n")] = '\0';
-	argv[0] = line;
-	argv[1] = NULL;
+	size_t bufsize = 64, i = 0;
+	char **argv = malloc(bufsize * sizeof(char *));
+	char *token;
+
+	if (!argv)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
+	token = strtok(line, " ");
+	while (token)
+	{
+		argv[i++] = token;
+		if (i >= bufsize)
+		{
+			bufsize += 64;
+			argv = realloc(argv, bufsize * sizeof(char *));
+			if (!argv)
+			{
+				perror("realloc");
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, " ");
+	}
+	argv[i] = NULL;
+
+	return (argv);
 }
 
 /**

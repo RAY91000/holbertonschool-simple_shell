@@ -13,8 +13,7 @@ extern char **environ;
 /* Function prototypes */
 void display_prompt(void);
 ssize_t read_command(char **line, size_t *len);
-void parse_command(char *line, char **argv);
+char **parse_command(char *line);
 void execute_command(char **argv);
-void main_loop(void);
 
 #endif /* SHELL_H */
