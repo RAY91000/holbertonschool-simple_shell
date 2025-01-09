@@ -39,7 +39,7 @@ int main(void)
 
 		if (status == 0)  /* If execution fails, print error */
 		{
-			fprintf(stderr, "%s: %s: No such file or directory\n", argv[0], argv[0]);
+			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
 
 		free(argv);

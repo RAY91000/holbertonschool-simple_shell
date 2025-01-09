@@ -32,7 +32,7 @@ int execute_command(char **argv)
 		/* If the child process failed (exit status is non-zero), print the error */
 		if (WEXITSTATUS(status) != 0)
 		{
-			fprintf(stderr, "%s: %s: No such file or directory\n", argv[0], argv[0]);
+			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
 	}
 	else  /* Fork failed */
