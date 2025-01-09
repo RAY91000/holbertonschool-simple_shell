@@ -10,7 +10,7 @@ void display_prompt(void)
 {
 	if (isatty(STDIN_FILENO))
 	{
-		printf("$ ");
+		printf("#cisfun$ ");
 		fflush(stdout);
 	}
 }
