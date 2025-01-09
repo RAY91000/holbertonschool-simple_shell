@@ -1,21 +1,29 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <stdlib.h>
+#include <sys/stat.h>
 
+/* Global variable for environment */
 extern char **environ;
+
+/* Define the prompt */
+#define PROMPT "$ "
 
 /* Function prototypes */
 void display_prompt(void);
-ssize_t read_command(char **line, size_t *len);
-void parse_command(char *line, char **argv);
-void execute_command(char **argv);
-void main_loop(void);
+char *read_command(void);
+char **split_command(char *command);
+int execute_command(char **argv);
+int command_exists(char *cmd);
+void handle_exit(char **argv);
+void handle_echo(char **argv);
+int handle_execve(char **argv);
 
-#endif /* SHELL_H */
+#endif /* MAIN_H */
+
