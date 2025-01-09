@@ -16,32 +16,34 @@ int main(void)
 
 	while (1)
 	{
-		display_prompt();  /* Display the prompt. */
+		display_prompt();
 
-		line = read_command();  /* Read the user's input. */
-		if (line == NULL)  /* Handle EOF (Ctrl+D). */
+		line = read_command();
+		if (line == NULL)  /* This handles EOF (Ctrl+D) */
 		{
-			break;  /* Exit the loop if Ctrl+D is pressed. */
+			printf("\n");
+			break;  /* Exit the shell when EOF is received */
 		}
 
-		if (strlen(line) == 0)  /* Handle empty input. */
+		if (strlen(line) == 0)
 		{
 			free(line);
-			continue;  /* Skip to the next iteration if input is empty. */
+			continue;  /* Don't execute if the line is empty */
 		}
 
-		argv = split_command(line);  /* Split the command into arguments. */
+		argv = split_command(line);
 
-		status = execute_command(argv);  /* Execute the command. */
+		status = execute_command(argv);
 
-		if (status == 0)  /* Command not found. */
+		/* Check if the command was found or not */
+		if (status == 0)
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
 
-		free(argv);  /* Free memory. */
-		free(line);  /* Free memory. */
+		free(argv);
+		free(line);
 	}
 
-	return (0);  /* No need for extra newline here. */
+	return (0);  /* The shell exits here, no prompt after exit */
 }
